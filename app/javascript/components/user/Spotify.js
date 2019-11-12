@@ -1,6 +1,21 @@
 import React from "react"
 import PropTypes from "prop-types"
 class Home extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  flashLights() {
+    fetch("/hue/flash_lights",
+    {
+        method: "POST",
+        headers: {
+          'X-CSRF-Token': this.props.auth_token
+        }
+    })
+  }
+
   render () {
     return (
       <React.Fragment>
@@ -11,6 +26,8 @@ class Home extends React.Component {
         <li> Song: {this.props.song.name} </li>
         <li> Tempo: {this.props.audio_features.tempo} </li>
       </ul>
+
+      <button onClick={() => this.flashLights()}> Flash Lights </button>
       </React.Fragment>
     );
   }
@@ -19,6 +36,7 @@ class Home extends React.Component {
 Home.propTypes = {
   user: PropTypes.object,
   song: PropTypes.object,
-  audio_features: PropTypes.audio_features
+  audio_features: PropTypes.object,
+  auth_token: PropTypes.string
 };
 export default Home
