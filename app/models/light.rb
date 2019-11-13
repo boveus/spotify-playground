@@ -35,7 +35,7 @@ class Light
 
   def flash
     turn_off
-    sleep 0.1
+    sleep 0.01
     turn_on
     set_brightness(254)
   end

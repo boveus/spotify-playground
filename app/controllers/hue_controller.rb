@@ -1,6 +1,7 @@
 class HueController < ApplicationController
   def flash_lights
-    HueService.new.all_lights_do(:flash)
+    puts params
+    HueApiService.all_lights_flash(params[:tempo])
     head :ok
   end
 end

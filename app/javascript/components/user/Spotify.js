@@ -4,6 +4,7 @@ class Home extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {tempo: this.props.audio_features.tempo}
   }
 
   flashLights() {
@@ -11,8 +12,10 @@ class Home extends React.Component {
     {
         method: "POST",
         headers: {
-          'X-CSRF-Token': this.props.auth_token
-        }
+          'X-CSRF-Token': this.props.auth_token,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({tempo: this.state.tempo})
     })
   }
 
@@ -24,7 +27,6 @@ class Home extends React.Component {
         <li> User: {this.props.user.display_name} </li>
         <li> Artist: {this.props.song.artists[0].name} </li>
         <li> Song: {this.props.song.name} </li>
-        <li> Tempo: {this.props.audio_features.tempo} </li>
       </ul>
 
       <button onClick={() => this.flashLights()}> Flash Lights </button>
