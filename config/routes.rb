@@ -3,5 +3,8 @@ Rails.application.routes.draw do
   root to: "home#show"
 
   post 'hue/flash_lights', to: 'hue#flash_lights'
+
+  post 'spotify/refresh_song', to: 'users#refresh_song'
+
   get '/auth/spotify/callback', to: 'users#spotify'
 end
