@@ -23,21 +23,30 @@ class Home extends React.Component {
   }
 
   async refreshSong() {
-    const response = await fetch("/spotify/refresh_song",
-    {
-        method: "POST",
-        headers: {
-          'X-CSRF-Token': this.props.auth_token,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({omniauth_auth: this.props.omniauth_auth})
-    })
-    const data = await response.json();
-    this.setState({
-      song: data.song,
-      audio_features: data.audio_features
-    })
+    try {
+      const response = await fetch("/spotify/refresh_song",
+      {
+          method: "POST",
+          headers: {
+            'X-CSRF-Token': this.props.auth_token,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({omniauth_auth: this.props.omniauth_auth})
+      })
+      const data = await response.json();
+      this.setState({
+        song: data.song,
+        audio_features: data.audio_features
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
+
+  componentDidMount() {
+    setInterval(() => { this.refreshSong() }, 60000);
+  }
+
   render () {
     return (
       <React.Fragment>
